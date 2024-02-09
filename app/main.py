@@ -27,5 +27,11 @@ class Computer(BaseModel):
     summary = "Create a computer",
     description = "Create a computer with its id, label and version",
 )
-async def create_item(computer: Computer):
+async def create_item(computer: Computer, api_key: str):
     return computer
+
+fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
+@app.get("/items/")
+async def read_item(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
